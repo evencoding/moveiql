@@ -1,0 +1,68 @@
+Schema : 데이터에 대한 기술.
+Query : 데이터베이스로 요청하여 받을 데이터. get data (Read)
+Mutation : 서버, 데이터베이스, 메모리의 데이터 변경 작업. mutate data. (Create, Upadate, Delete)
+! 는 requred 를 뜻한다
+typeDefs 는 모든 type들에 대한 정의다
+--------------------------------------------------------------------------------------------------------------
+# 0.3 Problems solved by GraphQL
+(1) GraphQL 로 해결할 수 있는 두가지 문제
+        1. Over-fetching
+            내가 요청한 영역의 정보보다, 많은 정보를 서버에서 받는다 (사용하지 않을 정보들도 받기 때문에 비효율적)
+        2. Under-fetching
+            어떤 하나를 완성하기위해 내가 다른 요청들을 해야할 때 발생한다
+            REST에서 하나를 완성하려고 많은 소스를 요청하는 것
+        GraphQL 로 Over-fetching 없이 코드를 짤 수 있고, 개발자가 어떤 정보를 원하는 지에 대해 통제할 수 있다
+        한 qeury에 내가 정확하게 원하는 정보만 받을 수 있다
+
+(2) GraphQL
+        URL은 존재하지 않는다
+        Query(데이터베이스에 정보를 요청하는 것)를 GraphQL 의 Backend에 보내면 요청 정보를 담은 Object를 보낸다
+            그러면 GraphQL이 JavaScript Object를 보내준다 (정확하게 내가 요청한 것만)
+--------------------------------------------------------------------------------------------------------------
+# 0.4 Creating a GraphQL Server with GraphQL Yoga
+    (1) yarn global add nodemon 으로 nodemon 설치
+        babel-node 설치
+            .babelrc 파일 작성 후 
+                yarn add babel-cli babel-preset-env babel-preset-stage-3 --dev 로 설치
+    (2) package.json 에 scripts 추가
+    (3) 서버 만들기
+            import { GraphQLServer } from "graphql-yoga";
+            const server = new GraphQLServer({});
+            server.start(() => console.log("GraphQLServer Running"));
+    (4) schema
+        내가 사용자에게 보내거나 사용자로부터 받을 data에 대한 설명
+--------------------------------------------------------------------------------------------------------------
+# 0.5 Creating the first Query and Resolver
+    (1) graphql 폴더를 생성 후 schema.graphql 파일을 생성한다
+    (2) schema.graphql 에서 사용자가 뭘 할 지에 대해서 정의한다
+        1. Database로부터 정보를 얻는다 (Query라 부름)
+        2. 정보를 Database로 보낸다
+        Query는 단지 내가 정보를 받을 때만 쓰인다
+        Mutation(변형)은 내가 정보를 변형할 때, 내 서버에서 혹은 Database에서, 메모리에서 정보를 바꾸는 작업을 할 때를 말한다
+    (3) GraphQL 은 이런 specification(자세한 설명)과 서버에 이러한 유형들을 정의해 놓고 있다
+        따라서 내가 GraphQL 서버에 할 건 어떤 Mutations 그리고 어떤 Query들을 내가 가졌는지 알려주는 것이다
+    (4) Query를 선언한다
+    (5) 서버안에 typeDefs을 쓰는데, 모든 type들에 대한 정의다
+    (6) 프로그램을 실행할 때 Node.js는 어떤 걸 해야 하고 우린 실제로 Query의 기능성을 프로그래밍 해야한다
+        그걸 위해서 graphql 폴더에 resolvers.js 파일을 생성한다
+        resolvers
+            Query를 resolve(해결)하는 것이다
+        Query를 위한 Resolver를 작성한다
+    (7) 서버 파일에서 resolvers를 import 해준다
+    (8) 서버안에 resolvers를 넣는다
+    (9) http://localhost:4000/ 로 들어가면 GraphQL Playground가 나온다
+        GraphQL Playground 는 GraphQl yoga 안에 있는 것이다
+--------------------------------------------------------------------------------------------------------------
+# 0.6 Extending the Schema
+    (1) Playground에서 Query를 넣어주면 GraphQL이 내 서버에서 Qeury에 맞는 Resolvers를 찾아준다
+        자료형이 다르면 error 발생
+    (2) Playground는 내 Database를 테스트 해주는 역할을 한다
+        내가 만들 수 있는 Query들의 설명을 볼 수 있다
+    (3) schema에서 type을 내가 임의로 생성할 수 있다
+--------------------------------------------------------------------------------------------------------------
+# 0.7 Extending the Schema part Two
+    (1) 
+--------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------
